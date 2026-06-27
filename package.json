@@ -1,0 +1,38 @@
+{
+  "name": "digit-flow-pro",
+  "version": "1.0.0",
+  "description": "Live Deriv digit analysis bot, auto trader, Matches/Differs scanner with real-time WebSocket streaming",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stenroj/Trading-digit-flow-pro.git"
+  },
+  "keywords": [
+    "deriv",
+    "trading",
+    "bot",
+    "digits",
+    "websocket",
+    "real-time",
+    "dashboard",
+    "chrome-extension"
+  ],
+  "author": "stenroj",
+  "license": "MIT",
+  "homepage": "https://stenroj.github.io/Trading-digit-flow-pro/",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "start": "open index.html"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "chart.js": "^4.4.0"
+  },
+  "browser": {
+    "chart.js": "https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
+  },
+  "engines": {
+    "chrome": ">=88"
+  },
+  "manifest_version": 3
+}
