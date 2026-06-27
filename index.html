@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digit Flow Pro — Live Deriv Trading Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <h1 class="logo">💹 Digit Flow Pro</h1>
+      <p class="tagline">Live Deriv Digit Analysis & Auto Trading</p>
+    </div>
+    <div class="header-right">
+      <div class="auth-widget">
+        <button id="settingsBtn" class="btn-icon" title="Settings">⚙️</button>
+        <span id="statusPill" class="status-pill simulation">SIMULATION</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Settings</h2>
+        <button class="btn-close" id="closeSettings">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-section">
+          <label>Deriv API Token</label>
+          <div class="input-row">
+            <input id="tokenInput" type="password" placeholder="Paste your Deriv API token">
+            <button id="toggleToken" class="btn-ghost">Show</button>
+          </div>
+          <div id="tokenStatus" class="token-status"></div>
+        </div>
+
+        <div class="settings-section">
+          <label>Trading Mode</label>
+          <div class="mode-toggle">
+            <div>
+              <strong>Real Trading</strong>
+              <p>Enable live Deriv account trading</p>
+            </div>
+            <label class="switch">
+              <input id="realModeToggle" type="checkbox" disabled>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <label>Tick Symbol</label>
+          <select id="symbolSelect">
+            <option value="1">Digits Over/Under (1s)</option>
+            <option value="2">Digits Match/Differ (1s)</option>
+            <option value="3">Digits Even/Odd (1s)</option>
+            <option value="4">Rise/Fall (1s)</option>
+            <option value="5">High/Low (1s)</option>
+          </select>
+        </div>
+
+        <div class="settings-actions">
+          <button id="validateBtn" class="btn-primary">Validate & Save</button>
+          <button id="disconnectBtn" class="btn-danger">Disconnect</button>
+        </div>
+
+        <div id="settingsMsg" class="message"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Dashboard -->
+  <main class="dashboard">
+    <!-- Live Ticker -->
+    <section class="section ticker-section">
+      <h2>📊 Live Tick Stream</h2>
+      <div class="ticker-grid">
+        <div class="ticker-card">
+          <div class="ticker-label">Current Tick</div>
+          <div id="currentTick" class="ticker-value">—</div>
+          <div id="tickTime" class="ticker-time">Waiting...</div>
+        </div>
+        <div class="ticker-card">
+          <div class="ticker-label">Trend</div>
+          <div id="trend" class="ticker-value trend-neutral">—</div>
+        </div>
+        <div class="ticker-card">
+          <div class="ticker-label">Ticks/Min</div>
+          <div id="ticksPerMin" class="ticker-value">0</div>
+        </div>
+        <div class="ticker-card">
+          <div class="ticker-label">Stream Status</div>
+          <div id="streamStatus" class="ticker-value status-disconnected">●</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Chart -->
+    <section class="section chart-section">
+      <h2>📈 Tick Chart (Last 60)</h2>
+      <div class="chart-container">
+        <canvas id="tickChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Analysis Grid -->
+    <div class="analysis-grid">
+      <!-- Over/Under Analysis -->
+      <section class="section analysis-card">
+        <h3>📍 Over/Under</h3>
+        <div class="analysis-content">
+          <div class="stat-row">
+            <span>Over</span>
+            <div class="stat-bar">
+              <div id="overBar" class="bar-fill over"></div>
+              <span id="overCount" class="stat-number">0</span>
+            </div>
+          </div>
+          <div class="stat-row">
+            <span>Under</span>
+            <div class="stat-bar">
+              <div id="underBar" class="bar-fill under"></div>
+              <span id="underCount" class="stat-number">0</span>
+            </div>
+          </div>
+          <div class="last-digit">Last: <strong id="overUnderLast">—</strong></div>
+        </div>
+      </section>
+
+      <!-- Matches/Differs Analysis -->
+      <section class="section analysis-card">
+        <h3>🔄 Matches/Differs</h3>
+        <div class="analysis-content">
+          <div class="stat-row">
+            <span>Match</span>
+            <div class="stat-bar">
+              <div id="matchBar" class="bar-fill match"></div>
+              <span id="matchCount" class="stat-number">0</span>
+            </div>
+          </div>
+          <div class="stat-row">
+            <span>Differ</span>
+            <div class="stat-bar">
+              <div id="differBar" class="bar-fill differ"></div>
+              <span id="differCount" class="stat-number">0</span>
+            </div>
+          </div>
+          <div class="last-digit">Last: <strong id="matchDiffLast">—</strong></div>
+        </div>
+      </section>
+
+      <!-- Even/Odd Analysis -->
+      <section class="section analysis-card">
+        <h3>🔢 Even/Odd</h3>
+        <div class="analysis-content">
+          <div class="stat-row">
+            <span>Even</span>
+            <div class="stat-bar">
+              <div id="evenBar" class="bar-fill even"></div>
+              <span id="evenCount" class="stat-number">0</span>
+            </div>
+          </div>
+          <div class="stat-row">
+            <span>Odd</span>
+            <div class="stat-bar">
+              <div id="oddBar" class="bar-fill odd"></div>
+              <span id="oddCount" class="stat-number">0</span>
+            </div>
+          </div>
+          <div class="last-digit">Last: <strong id="evenOddLast">—</strong></div>
+        </div>
+      </section>
+
+      <!-- Last Digit Frequency -->
+      <section class="section analysis-card">
+        <h3>🎯 Last Digit Frequency</h3>
+        <div class="analysis-content">
+          <div class="digit-grid" id="digitFrequency">
+            <div class="digit-box">0<div class="digit-count">0</div></div>
+            <div class="digit-box">1<div class="digit-count">0</div></div>
+            <div class="digit-box">2<div class="digit-count">0</div></div>
+            <div class="digit-box">3<div class="digit-count">0</div></div>
+            <div class="digit-box">4<div class="digit-count">0</div></div>
+            <div class="digit-box">5<div class="digit-count">0</div></div>
+            <div class="digit-box">6<div class="digit-count">0</div></div>
+            <div class="digit-box">7<div class="digit-count">0</div></div>
+            <div class="digit-box">8<div class="digit-count">0</div></div>
+            <div class="digit-box">9<div class="digit-count">0</div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Last 10 Ticks Table -->
+    <section class="section">
+      <h2>📋 Last 10 Ticks</h2>
+      <div class="table-container">
+        <table class="ticks-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Tick</th>
+              <th>Over/Under</th>
+              <th>Match/Differ</th>
+              <th>Even/Odd</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="ticksTableBody">
+            <tr><td colspan="6" class="empty">Waiting for ticks...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Digit Flow Pro v1.0.0 • Built with ❤️ for Deriv Traders</p>
+    <p style="font-size: 12px; color: #8a97ad;">⚠️ Use at your own risk. Past performance ≠ future results.</p>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
