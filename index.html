@@ -3,232 +3,431 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digit Flow Pro — Live Deriv Trading Dashboard</title>
+  <title>Digit Flow Pro — Rise/Fall Bot</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<div class="app-container">
-  <!-- Header -->
-  <header class="header">
-    <div class="header-left">
-      <h1 class="logo">💹 Digit Flow Pro</h1>
-      <p class="tagline">Live Deriv Digit Analysis & Auto Trading</p>
-    </div>
-    <div class="header-right">
-      <div class="auth-widget">
-        <button id="settingsBtn" class="btn-icon" title="Settings">⚙️</button>
-        <span id="statusPill" class="status-pill simulation">SIMULATION</span>
-      </div>
-    </div>
-  </header>
-
-  <!-- Settings Modal -->
-  <div id="settingsModal" class="modal hidden">
-    <div class="modal-overlay"></div>
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Settings</h2>
-        <button class="btn-close" id="closeSettings">×</button>
-      </div>
-      <div class="modal-body">
-        <div class="settings-section">
-          <label>Deriv API Token</label>
-          <div class="input-row">
-            <input id="tokenInput" type="password" placeholder="Paste your Deriv API token">
-            <button id="toggleToken" class="btn-ghost">Show</button>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+          </svg>
+          <div>
+            <h1>Digit Flow Pro</h1>
+            <p class="account-label">DEMO0000 • Sim</p>
           </div>
-          <div id="tokenStatus" class="token-status"></div>
         </div>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" id="settingsBtn" title="Settings">⚙️</button>
+        <button class="icon-btn" id="shareBtn" title="Share">↗</button>
+      </div>
+    </header>
 
-        <div class="settings-section">
-          <label>Trading Mode</label>
-          <div class="mode-toggle">
-            <div>
-              <strong>Real Trading</strong>
-              <p>Enable live Deriv account trading</p>
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Control Panel -->
+      <section class="card control-panel">
+        <div class="balance-row">
+          <div class="power-btn">
+            <button class="btn btn-power" id="togglePower">⊙</button>
+          </div>
+          <div class="account-select">
+            <button class="account-btn">DEMO0000 ▼</button>
+          </div>
+          <div class="balance-display">
+            <span class="balance-label">Balance</span>
+            <span class="balance-amount" id="balanceAmount">1000.00</span>
+          </div>
+          <button class="refresh-btn">↻</button>
+        </div>
+      </section>
+
+      <!-- Auto Trader Control -->
+      <section class="card trader-control">
+        <div class="trader-header">
+          <h2>Auto Trader</h2>
+          <div class="status idle" id="traderStatus">
+            <span>Idle</span> • <span>Idle</span>
+          </div>
+        </div>
+        <div class="trader-buttons">
+          <button class="btn btn-primary" id="startTrader">▶ Start</button>
+          <button class="btn btn-danger" id="stopTrader">⊟ Stop</button>
+        </div>
+      </section>
+
+      <!-- Tabs for Analysis -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="volatility">Volatility 75 Index</button>
+        <button class="tab-btn" data-tab="analysis">Matches/Differs</button>
+      </div>
+
+      <!-- Volatility 75 Index Tab -->
+      <section class="tab-content active" id="volatility-tab">
+        <div class="card volatility-card">
+          <div class="vol-header">
+            <h3>Volatility 75 Index</h3>
+            <span class="ticks">3 ticks</span>
+          </div>
+          
+          <div class="vol-display">
+            <svg class="vol-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+            <div class="vol-price" id="volatilityPrice">43900.2154</div>
+          </div>
+
+          <!-- Digit Distribution Grid -->
+          <div class="digit-grid" id="digitGrid">
+            <div class="digit-item">
+              <div class="digit-circle" data-digit="0">0</div>
+              <span class="digit-percent">15%</span>
             </div>
-            <label class="switch">
-              <input id="realModeToggle" type="checkbox" disabled>
-              <span class="slider"></span>
-            </label>
+            <div class="digit-item">
+              <div class="digit-circle" data-digit="1">1</div>
+              <span class="digit-percent">11%</span>
+            </div>
+            <div class="digit-item selected">
+              <div class="digit-circle selected" data-digit="2">2</div>
+              <span class="digit-percent">5%</span>
+            </div>
+            <div class="digit-item">
+              <div class="digit-circle" data-digit="3">3</div>
+              <span class="digit-percent">10%</span>
+            </div>
+            <div class="digit-item">
+              <div class="digit-circle" data-digit="4">4</div>
+              <span class="digit-percent">8%</span>
+            </div>
+            <div class="digit-item">
+              <div class="digit-circle" data-digit="5">5</div>
+              <span class="digit-percent">7%</span>
+            </div>
+            <div class="digit-item">
+              <div class="digit-circle" data-digit="6">6</div>
+              <span class="digit-percent">14%</span>
+            </div>
+            <div class="digit-item">
+              <div class="digit-circle" data-digit="7">7</div>
+              <span class="digit-percent">8%</span>
+            </div>
+            <div class="digit-item">
+              <div class="digit-circle" data-digit="8">8</div>
+              <span class="digit-percent">12%</span>
+            </div>
+            <div class="digit-item">
+              <div class="digit-circle" data-digit="9">9</div>
+              <span class="digit-percent">10%</span>
+            </div>
+          </div>
+
+          <!-- Matches and Differs Stats -->
+          <div class="stats-row">
+            <div class="stat-box matches">
+              <div class="stat-icon">≡</div>
+              <div class="stat-content">
+                <div class="stat-label">Matches</div>
+                <div class="stat-value" id="matchesCount">5</div>
+              </div>
+              <div class="stat-percent">7%</div>
+            </div>
+            <div class="stat-box differs">
+              <div class="stat-icon">⋈</div>
+              <div class="stat-content">
+                <div class="stat-label">Differs</div>
+                <div class="stat-value" id="differsCount">5</div>
+              </div>
+              <div class="stat-percent">93%</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Matches/Differs Tab -->
+      <section class="tab-content" id="analysis-tab">
+        <div class="card">
+          <h3>Pattern Analysis</h3>
+          <div class="pattern-grid">
+            <div class="pattern-item">
+              <span>Odd</span>
+              <span id="oddPercent">48%</span>
+            </div>
+            <div class="pattern-item">
+              <span>Even</span>
+              <span id="evenPercent">52%</span>
+            </div>
+            <div class="pattern-item">
+              <span>Over</span>
+              <span id="overPercent">51%</span>
+            </div>
+            <div class="pattern-item">
+              <span>Under</span>
+              <span id="underPercent">49%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trade Digit 5 Configuration -->
+      <section class="card trade-config">
+        <div class="config-header">
+          <h3>Trade digit 5</h3>
+          <span class="sim-badge">SIM</span>
+        </div>
+
+        <div class="config-grid">
+          <div class="config-input">
+            <label>Stake</label>
+            <input type="number" id="tradeStake" value="0.5" step="0.1">
+          </div>
+          <div class="config-input">
+            <label>Contracts</label>
+            <input type="number" id="tradeContracts" value="30" step="1">
           </div>
         </div>
 
-        <div class="settings-section">
-          <label>Tick Symbol</label>
-          <select id="symbolSelect">
-            <option value="1">Digits Over/Under (1s)</option>
-            <option value="2">Digits Match/Differ (1s)</option>
-            <option value="3">Digits Even/Odd (1s)</option>
-            <option value="4">Rise/Fall (1s)</option>
-            <option value="5">High/Low (1s)</option>
-          </select>
+        <div class="quick-buttons">
+          <button class="btn btn-success" id="matchesBtn">≡ Matches 5</button>
+          <button class="btn btn-error" id="differsBtn">⋈ Differs 5</button>
+        </div>
+      </section>
+
+      <!-- Digit Analysis -->
+      <section class="card digit-analysis">
+        <div class="analysis-header">
+          <h3>Digit Analysis</h3>
+          <span class="last-ticks">last 20 ticks</span>
         </div>
 
-        <div class="settings-actions">
-          <button id="validateBtn" class="btn-primary">Validate & Save</button>
-          <button id="disconnectBtn" class="btn-danger">Disconnect</button>
+        <div class="digit-bars" id="digitBars">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- Profit/Loss Display -->
+      <section class="card profit-loss">
+        <h4>PROFIT / LOSS (SESSION)</h4>
+        <div class="profit-value" id="profitLoss">+0.00</div>
+      </section>
+
+      <!-- Smart Auto Trader Settings -->
+      <section class="card smart-trader">
+        <div class="feature-item">
+          <div class="feature-info">
+            <h4>Smart Auto Trader</h4>
+            <p>Picks the strongest of Rise / Fall / Over / Under / Matches / Differs</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="smartTrader">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Differs Scanner -->
+      <section class="card differs-scanner">
+        <div class="feature-item">
+          <div class="feature-info">
+            <h4>Differs Scanner</h4>
+            <p>Scans every volatility for the rarest digit and auto-trades Differs</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="differsScanner">
+            <span class="slider"></span>
+          </label>
         </div>
 
-        <div id="settingsMsg" class="message"></div>
+        <div class="config-grid">
+          <div class="config-input">
+            <label>Min differs win %</label>
+            <input type="number" id="minDiffersWin" value="100" step="1">
+          </div>
+          <div class="config-input">
+            <label>Bulk contracts</label>
+            <input type="number" id="bulkContracts" value="30" step="1">
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-info">
+            <h4>Auto bulk</h4>
+            <p>Fire 30 contracts per signal</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="autoBulk" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-info">
+            <h4>Confirm digit</h4>
+            <p>Wait for the digit to hold 3 scans before trading</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="confirmDigit" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="config-grid">
+          <div class="config-input">
+            <label>Confirm scans</label>
+            <input type="number" id="confirmScans" value="3" step="1">
+          </div>
+          <div class="config-input">
+            <label>Confirming</label>
+            <input type="number" id="confirmingCount" value="0" min="0" max="3" step="1" readonly>
+          </div>
+        </div>
+
+        <div class="info-text">
+          Only fires at 100%+ edge (use 95–100% for the safest Differs trades). Symbol and predicted digit switch automatically.
+        </div>
+      </section>
+
+      <!-- Time Frame Settings -->
+      <section class="card timeframe-settings">
+        <h4>Time frame</h4>
+        <div class="button-group">
+          <button class="btn btn-small" data-tf="25">25</button>
+          <button class="btn btn-small" data-tf="50">50</button>
+          <button class="btn btn-small active" data-tf="100">100</button>
+          <button class="btn btn-small" data-tf="200">200</button>
+          <button class="btn btn-small" data-tf="500">500</button>
+          <button class="btn btn-small" data-tf="1000">1000</button>
+        </div>
+      </section>
+
+      <!-- Advanced Trading Parameters -->
+      <section class="card advanced-params">
+        <div class="params-grid">
+          <div class="config-input">
+            <label>Stake</label>
+            <input type="number" id="advStake" value="0.5" step="0.1">
+          </div>
+          <div class="config-input">
+            <label>Duration (ticks)</label>
+            <input type="number" id="durationTicks" value="1" step="1">
+          </div>
+        </div>
+
+        <div class="params-grid">
+          <div class="config-input">
+            <label>Lookback</label>
+            <input type="number" id="lookback" value="100" step="1">
+          </div>
+          <div class="config-input">
+            <label>Edge %</label>
+            <input type="number" id="edgePercent" value="100" step="1">
+          </div>
+        </div>
+
+        <div class="params-grid">
+          <div class="config-input">
+            <label>SL ($)</label>
+            <input type="number" id="stopLoss" value="20" step="1">
+          </div>
+          <div class="config-input">
+            <label>TP ($)</label>
+            <input type="number" id="takeProfit" value="50" step="1">
+          </div>
+        </div>
+
+        <div class="config-input">
+          <label>Predicted digit</label>
+          <input type="number" id="predictedDigit" value="5" min="0" max="9" step="1">
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-info">
+            <h4>Martingale</h4>
+            <p>Recover losses by scaling stake</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="martingale">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="params-grid">
+          <div class="config-input">
+            <label>Multiplier</label>
+            <input type="number" id="multiplier" value="2" step="0.1">
+          </div>
+          <div class="config-input">
+            <label>Max stake</label>
+            <input type="number" id="maxStake" value="40" step="1">
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-info">
+            <h4>Stop on dominance flip</h4>
+            <p>Halt when the trend reverses or fades</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="stopDominance" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="config-input">
+          <label>Volatility guard % (0 = off)</label>
+          <input type="number" id="volatilityGuard" value="200" step="10">
+        </div>
+      </section>
+
+      <!-- Live Scanner Section -->
+      <section class="card live-scanner">
+        <h3>Live Scanner — All Volatilities</h3>
+        <div class="volatilities-list" id="volatilitiesList">
+          <div class="volatility-item">
+            <span class="vol-name">Volatility 10 Index</span>
+            <span class="vol-signal">Signal: Matches</span>
+          </div>
+          <div class="volatility-item">
+            <span class="vol-name">Volatility 25 Index</span>
+            <span class="vol-signal">Signal: Rise</span>
+          </div>
+          <div class="volatility-item">
+            <span class="vol-name">Volatility 50 Index</span>
+            <span class="vol-signal">Signal: Differs</span>
+          </div>
+          <div class="volatility-item">
+            <span class="vol-name">Volatility 75 Index</span>
+            <span class="vol-signal">Signal: Under</span>
+          </div>
+          <div class="volatility-item">
+            <span class="vol-name">Volatility 100 Index</span>
+            <span class="vol-signal">Signal: Fall</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Settings</h2>
+          <button class="close-btn" id="closeSettings">✕</button>
+        </div>
+        <div class="modal-body">
+          <label>Deriv API Token</label>
+          <input type="password" id="apiToken" placeholder="Paste your Deriv API token">
+          <button class="btn btn-primary" id="validateToken">Validate & Save</button>
+          <button class="btn btn-secondary" id="disconnectToken">Disconnect</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Main Dashboard -->
-  <main class="dashboard">
-    <!-- Live Ticker -->
-    <section class="section ticker-section">
-      <h2>📊 Live Tick Stream</h2>
-      <div class="ticker-grid">
-        <div class="ticker-card">
-          <div class="ticker-label">Current Tick</div>
-          <div id="currentTick" class="ticker-value">—</div>
-          <div id="tickTime" class="ticker-time">Waiting...</div>
-        </div>
-        <div class="ticker-card">
-          <div class="ticker-label">Trend</div>
-          <div id="trend" class="ticker-value trend-neutral">—</div>
-        </div>
-        <div class="ticker-card">
-          <div class="ticker-label">Ticks/Min</div>
-          <div id="ticksPerMin" class="ticker-value">0</div>
-        </div>
-        <div class="ticker-card">
-          <div class="ticker-label">Stream Status</div>
-          <div id="streamStatus" class="ticker-value status-disconnected">●</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Live Chart -->
-    <section class="section chart-section">
-      <h2>📈 Tick Chart (Last 60)</h2>
-      <div class="chart-container">
-        <canvas id="tickChart"></canvas>
-      </div>
-    </section>
-
-    <!-- Analysis Grid -->
-    <div class="analysis-grid">
-      <!-- Over/Under Analysis -->
-      <section class="section analysis-card">
-        <h3>📍 Over/Under</h3>
-        <div class="analysis-content">
-          <div class="stat-row">
-            <span>Over</span>
-            <div class="stat-bar">
-              <div id="overBar" class="bar-fill over"></div>
-              <span id="overCount" class="stat-number">0</span>
-            </div>
-          </div>
-          <div class="stat-row">
-            <span>Under</span>
-            <div class="stat-bar">
-              <div id="underBar" class="bar-fill under"></div>
-              <span id="underCount" class="stat-number">0</span>
-            </div>
-          </div>
-          <div class="last-digit">Last: <strong id="overUnderLast">—</strong></div>
-        </div>
-      </section>
-
-      <!-- Matches/Differs Analysis -->
-      <section class="section analysis-card">
-        <h3>🔄 Matches/Differs</h3>
-        <div class="analysis-content">
-          <div class="stat-row">
-            <span>Match</span>
-            <div class="stat-bar">
-              <div id="matchBar" class="bar-fill match"></div>
-              <span id="matchCount" class="stat-number">0</span>
-            </div>
-          </div>
-          <div class="stat-row">
-            <span>Differ</span>
-            <div class="stat-bar">
-              <div id="differBar" class="bar-fill differ"></div>
-              <span id="differCount" class="stat-number">0</span>
-            </div>
-          </div>
-          <div class="last-digit">Last: <strong id="matchDiffLast">—</strong></div>
-        </div>
-      </section>
-
-      <!-- Even/Odd Analysis -->
-      <section class="section analysis-card">
-        <h3>🔢 Even/Odd</h3>
-        <div class="analysis-content">
-          <div class="stat-row">
-            <span>Even</span>
-            <div class="stat-bar">
-              <div id="evenBar" class="bar-fill even"></div>
-              <span id="evenCount" class="stat-number">0</span>
-            </div>
-          </div>
-          <div class="stat-row">
-            <span>Odd</span>
-            <div class="stat-bar">
-              <div id="oddBar" class="bar-fill odd"></div>
-              <span id="oddCount" class="stat-number">0</span>
-            </div>
-          </div>
-          <div class="last-digit">Last: <strong id="evenOddLast">—</strong></div>
-        </div>
-      </section>
-
-      <!-- Last Digit Frequency -->
-      <section class="section analysis-card">
-        <h3>🎯 Last Digit Frequency</h3>
-        <div class="analysis-content">
-          <div class="digit-grid" id="digitFrequency">
-            <div class="digit-box">0<div class="digit-count">0</div></div>
-            <div class="digit-box">1<div class="digit-count">0</div></div>
-            <div class="digit-box">2<div class="digit-count">0</div></div>
-            <div class="digit-box">3<div class="digit-count">0</div></div>
-            <div class="digit-box">4<div class="digit-count">0</div></div>
-            <div class="digit-box">5<div class="digit-count">0</div></div>
-            <div class="digit-box">6<div class="digit-count">0</div></div>
-            <div class="digit-box">7<div class="digit-count">0</div></div>
-            <div class="digit-box">8<div class="digit-count">0</div></div>
-            <div class="digit-box">9<div class="digit-count">0</div></div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- Last 10 Ticks Table -->
-    <section class="section">
-      <h2>📋 Last 10 Ticks</h2>
-      <div class="table-container">
-        <table class="ticks-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Tick</th>
-              <th>Over/Under</th>
-              <th>Match/Differ</th>
-              <th>Even/Odd</th>
-              <th>Time</th>
-            </tr>
-          </thead>
-          <tbody id="ticksTableBody">
-            <tr><td colspan="6" class="empty">Waiting for ticks...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <p>Digit Flow Pro v1.0.0 • Built with ❤️ for Deriv Traders</p>
-    <p style="font-size: 12px; color: #8a97ad;">⚠️ Use at your own risk. Past performance ≠ future results.</p>
-  </footer>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="app.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

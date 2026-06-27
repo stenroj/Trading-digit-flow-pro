@@ -3,17 +3,11 @@
   "name": "Digit Flow Pro — Rise/Fall Bot",
   "version": "1.0.0",
   "description": "Live Deriv digit analysis bot, auto trader, Matches/Differs scanner. Open in a tab from your browser toolbar.",
-  "permissions": [
-    "storage",
-    "tabs"
-  ],
-  "host_permissions": [
-    "https://ws.derivws.com/*",
-    "https://id-preview--bbce84a7-37fa-4a9b-bc83-c0c29a1f739f.lovable.app/*",
-    "https://stenroj.github.io/*"
-  ],
+  "permissions": ["storage"],
   "action": {
-    "default_icon": "icon.png",
+    "default_icon": {
+      "48": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='%233b82f6'><path d='M24 4l-22 11v20c0 11.1 7.68 21.48 18 24 10.32-2.52 18-12.9 18-24V15l-22-11z'/></svg>"
+    },
     "default_title": "Open Digit Flow Pro"
   },
   "background": {
@@ -22,9 +16,5 @@
   "options_ui": {
     "page": "options.html",
     "open_in_tab": true
-  },
-  "icons": {
-    "48": "icon.png",
-    "128": "icon.png"
   }
 }

@@ -1,326 +1,127 @@
-# 💹 Digit Flow Pro — Live Deriv Trading Dashboard
+# Digit Flow Pro — Rise/Fall Bot
 
-**Live Deriv digit analysis bot, auto trader, Matches/Differs scanner with real-time WebSocket streaming.**
+A comprehensive trading dashboard for live Deriv digit analysis with auto-trading capabilities.
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Platform](https://img.shields.io/badge/platform-Chrome%20Extension%20%2B%20Web-orange)
+## Features
 
-## 🚀 Features
+### 🤖 Auto Trading
+- **Auto Trader**: Start/stop automated trading with real-time status
+- **Smart Auto Trader**: Picks the strongest signal (Rise/Fall/Over/Under/Matches/Differs)
+- **Martingale**: Recover losses by scaling stake
+- **Stop on Dominance Flip**: Halt when trend reverses
 
-### Live Market Data
-- **Real-time WebSocket streaming** from Deriv API
-- **Live tick chart** (last 60 ticks with Chart.js)
-- **Trend detection** (Up/Down/Flat)
-- **Stream status indicator** with connection monitoring
-- **Automatic reconnection** on disconnect
+### 📊 Live Analysis
+- **Volatility 75 Index**: Real-time price tracking
+- **Digit Distribution**: Visual grid showing digit frequency (0-9)
+- **Matches/Differs**: Pattern analysis with statistics
+- **Even/Odd Analysis**: Last digit analysis
+- **Digit Frequency**: Last 20 ticks analysis
+- **Over/Under**: Statistical breakdown
 
-### Digit Analysis
-- **Over/Under Analysis** (5 as threshold)
-- **Matches/Differs** (consecutive digit comparison)
-- **Even/Odd** (last digit parity)
-- **Last Digit Frequency** (0-9 distribution heatmap)
-- **Real-time stats** with percentage bars
+### 🎯 Differs Scanner
+- Scans every volatility for rarest digit
+- Auto-trades Differs signals
+- Configurable minimum win percentage
+- Auto bulk firing (30 contracts per signal)
+- Digit confirmation (wait 3 scans before trading)
+- Edge-based filtering (95-100%)
 
-### Trading Features
-- **Live Trading Mode** - Trade with real Deriv account
-- **Simulation Mode** - Practice with demo account
-- **API Token Authentication** - Secure token storage
-- **Multiple Symbols** - Digits Over/Under, Match/Differ, Even/Odd, Rise/Fall, High/Low
-- **Tick History** - Last 10 ticks table with analysis
+### ⚙️ Advanced Settings
+- **Time Frame**: 25, 50, 100, 200, 500, 1000 ticks
+- **Stake**: Configurable stake amount
+- **Duration**: Trade duration in ticks
+- **Lookback**: Historical data window
+- **Edge %**: Minimum edge requirement
+- **SL/TP**: Stop loss and take profit
+- **Predicted Digit**: Manual digit prediction
+- **Volatility Guard**: Risk management (0 = off)
+- **Multiplier**: Martingale multiplier
+- **Max Stake**: Maximum stake limit
 
-### Dashboard
-- **Professional dark UI** with real-time updates
-- **Responsive design** (desktop, tablet, mobile)
-- **Settings modal** for configuration
-- **Live status pill** (SIMULATION/LIVE indicator)
-- **Ticker cards** with trend indicators
-- **Analysis cards** with visual bar charts
-- **Digit frequency heatmap** with color intensity
+### 📈 Live Scanner
+- Monitor all volatility indices simultaneously
+- Real-time signal detection
+- Multi-timeframe analysis
 
-## 📋 Deployment Options
+### 💰 Session Tracking
+- Real-time balance display
+- Profit/loss tracking
+- Trade history
 
-### Option 1: GitHub Pages (Recommended)
-The dashboard is ready to deploy on GitHub Pages at:
-```
-https://stenroj.github.io/Trading-digit-flow-pro/
-```
-
-**To enable:**
-1. Go to repository Settings → Pages
-2. Set source to `main` branch, root folder
-3. GitHub will automatically deploy to the URL above
-
-### Option 2: Chrome Extension (Local)
-Load as unpacked extension for local testing:
+## Installation
 
 1. Clone the repository
-2. In Chrome: `chrome://extensions/`
-3. Enable "Developer mode" (top right)
-4. Click "Load unpacked"
-5. Select the repository folder
-6. Click the extension icon to open dashboard
-
-### Option 3: Local Development Server
-```bash
-python3 -m http.server 8000
-# or
-npx http-server
-```
-Then visit `http://localhost:8000`
-
-## 🔧 Configuration
-
-### API Token Setup
-1. Get your Deriv API token from [https://app.deriv.com/account/api-token](https://app.deriv.com/account/api-token)
-2. Open settings (⚙️ icon)
-3. Paste token and click "Validate & Save"
-4. Select trading mode (Simulation or Live)
-
-### Trading Symbols
-- **1s Digits Over/Under**: `R_50`
-- **1s Digits Match/Differ**: `MATCH_50`
-- **1s Digits Even/Odd**: `ODD_50`
-- **1s Rise/Fall**: `FRXAUDCAD`
-- **1s High/Low**: `EURUSD`
-
-## 📊 UI Components
-
-### Header
-- Logo with tagline
-- Settings button
-- Live/Simulation status indicator
-
-### Ticker Section
-- Current tick value
-- Trend (↑ UP / ↓ DOWN / → FLAT)
-- Ticks per minute
-- Stream status indicator
-
-### Chart Section
-- Interactive Chart.js line graph
-- Last 60 ticks
-- Real-time updates
-- Hover tooltips
-
-### Analysis Cards
-- **Over/Under**: Distribution bar chart
-- **Matches/Differs**: Consecutive comparison
-- **Even/Odd**: Parity analysis
-- **Last Digit Frequency**: 0-9 heatmap with intensity coloring
-
-### History Table
-- Last 10 ticks
-- Tick value, Over/Under, Match/Differ, Even/Odd, Time
-- Responsive scrolling
-
-## 🎨 Design
-
-### Color Scheme (Dark Mode)
-- **Background**: `#0b0f1a`
-- **Secondary**: `#121826`
-- **Border**: `#243049`
-- **Text**: `#e6edf7`
-- **Accent**: `#3b82f6`
-- **Success**: `#4ade80`
-- **Danger**: `#ef4444`
-
-### Analysis Colors
-- **Over**: `#3b82f6` (Blue)
-- **Under**: `#ef4444` (Red)
-- **Match**: `#4ade80` (Green)
-- **Differ**: `#f59e0b` (Amber)
-- **Even**: `#8b5cf6` (Purple)
-- **Odd**: `#ec4899` (Pink)
-
-## 📱 Responsive Breakpoints
-- **Desktop**: Full layout, 4-column grid
-- **Tablet** (≤768px): 2-column grid, adjusted padding
-- **Mobile** (≤480px): 1-column layout, optimized touch targets
-
-## 🔐 Security
-
-- **Token Storage**: Secure storage via Chrome `storage.local` API
-- **WebSocket**: Encrypted WSS connection to Deriv
-- **No Backend**: All processing client-side
-- **HTTPS Only**: GitHub Pages enforces HTTPS
-
-## 📦 File Structure
-
-```
-Trading-digit-flow-pro/
-├── index.html          # Main dashboard HTML
-├── app.js              # Core application logic
-├── styles.css          # Dashboard styling
-├── manifest.json       # Chrome extension manifest
-├── background.js       # Extension background worker
-├── options.html        # Settings page (optional)
-├── options.js          # Settings logic (optional)
-├── icon.png           # Extension icon (48x48, 128x128)
-├── README.md          # This file
-└── .gitignore         # Git ignore rules
-```
-
-## 🚀 Getting Started
-
-### 1. Clone Repository
 ```bash
 git clone https://github.com/stenroj/Trading-digit-flow-pro.git
 cd Trading-digit-flow-pro
 ```
 
-### 2. Get Deriv API Token
-- Visit [https://app.deriv.com/account/api-token](https://app.deriv.com/account/api-token)
-- Create a new token with scopes: `read`, `trade`, `trading`
-- Copy the token
+2. Open `index.html` in your browser
 
-### 3. Open Dashboard
-- **GitHub Pages**: https://stenroj.github.io/Trading-digit-flow-pro/
-- **Local**: Load `index.html` in your browser
-- **Chrome Extension**: Load unpacked from repository
+3. For GitHub Pages deployment:
+   - Push to GitHub
+   - Settings → Pages → Source: Deploy from a branch → main
+   - Your site will be live at: `https://stenroj.github.io/Trading-digit-flow-pro`
 
-### 4. Paste Token & Trade
-1. Click ⚙️ (Settings)
-2. Paste your Deriv token
-3. Click "Validate & Save"
-4. Toggle "Real Trading" to enable (optional)
-5. Start analyzing ticks!
+## Deriv API Integration
 
-## 💡 How It Works
+1. Get your API token from [Deriv API Console](https://app.deriv.com/api-management)
+2. Click Settings ⚙️ in the dashboard
+3. Paste your token and validate
+4. Switch between Simulation and Real Trading modes
 
-### Live Tick Stream
-1. WebSocket connects to Deriv at `wss://ws.derivws.com/websockets/v3`
-2. Authorizes with API token
-3. Subscribes to selected symbol (e.g., `R_50` for digits)
-4. Receives tick updates in real-time (typically every 1 second)
+## Configuration
 
-### Analysis Pipeline
-```
-Raw Tick → Extract Last Digit → Analyze (Over/Under, Match/Differ, Even/Odd)
-→ Update UI → Store in History → Update Chart
-```
+All settings are automatically saved to browser localStorage.
 
-### Storage
-- **Browser LocalStorage**: Settings, token, mode
-- **In-Memory State**: Last 60 ticks, analysis data, chart instance
+### Trade Configuration
+- **Stake**: Starting stake amount (0.5 - 100)
+- **Contracts**: Number of contracts per trade
+- **Duration**: Contract duration in ticks
 
-## ⚙️ API Reference
+### Risk Management
+- **SL**: Stop loss in dollars
+- **TP**: Take profit in dollars
+- **Volatility Guard**: Protection against extreme volatility
+- **Max Stake**: Upper limit for Martingale scaling
 
-### Deriv WebSocket Messages
+## Usage
 
-**Authorization:**
-```json
-{ "authorize": "YOUR_API_TOKEN" }
-```
+1. **Setup**: Configure your trading parameters in the Advanced section
+2. **Start**: Click "Start" button to begin auto-trading
+3. **Monitor**: Watch real-time analysis in the dashboard
+4. **Adjust**: Modify settings on-the-fly (changes auto-save)
+5. **Stop**: Click "Stop" to halt trading
 
-**Subscribe to Ticks:**
-```json
-{ "ticks": "R_50", "subscribe": 1 }
-```
+## Quick Trades
 
-**Tick Response:**
-```json
-{
-  "tick": {
-    "epoch": 1234567890,
-    "quote": 1234.5678
-  }
-}
-```
+Use the quick buttons:
+- **Matches 5**: Trade digit 5 matches
+- **Differs 5**: Trade digit 5 differs
 
-## 🐛 Troubleshooting
+## Performance Tips
 
-### "Network error" or "Timeout contacting Deriv"
-- Check internet connection
-- Verify token is valid at https://app.deriv.com
-- Check Deriv API status
-- Clear browser cache and reload
+- Start with simulation mode to test settings
+- Use 100-200 tick lookback for stable signals
+- Set edge % to 95-100 for high-confidence trades
+- Enable Martingale only with small multipliers (1.5-2.0)
+- Monitor volatility guard to prevent large drawdowns
 
-### "Token validation failed"
-- Ensure token has proper scopes: `read`, `trade`, `trading`
-- Token may be revoked or expired
-- Generate a new token
+## Browser Support
 
-### Chart not updating
-- Refresh the page
-- Check browser console for errors (F12)
-- Ensure JavaScript is enabled
+- Chrome/Edge 90+
+- Firefox 88+
+- Safari 14+
+- Mobile browsers (iOS Safari, Chrome Mobile)
 
-### No ticks received
-- Verify stream status indicator (● should be green/connected)
-- Check if symbol is tradable during market hours
-- Some symbols only available during trading hours
+## Disclaimer
 
-## 🔄 Reconnection Logic
+⚠️ **Use at your own risk.** Past performance does not guarantee future results. Always trade with money you can afford to lose.
 
-The dashboard automatically:
-- Detects WebSocket disconnects
-- Attempts reconnect every 5 seconds
-- Maintains tick history during reconnection
-- Updates UI status indicator
-
-## 📈 Analysis Metrics
-
-### Over/Under
-- Counts digits > 5 as "Over"
-- Counts digits < 5 as "Under"
-- Excludes 5 as neutral
-
-### Match/Differ
-- Compares current digit with previous
-- Displays match percentage
-- Shows last result
-
-### Even/Odd
-- Even: digits 0, 2, 4, 6, 8
-- Odd: digits 1, 3, 5, 7, 9
-- Real-time ratio
-
-### Frequency Heatmap
-- 0-9 digit distribution
-- Color intensity = frequency
-- Updates with each tick
-
-## ⚠️ Disclaimer
-
-**This tool is for educational and analysis purposes only.**
-
-- ⚠️ Past performance does not guarantee future results
-- ⚠️ Use at your own risk with real funds
-- ⚠️ Always use proper risk management
-- ⚠️ Never trade more than you can afford to lose
-- ⚠️ Deriv carries financial risk; understand instruments before trading
-
-## 📄 License
+## License
 
 MIT License - See LICENSE file for details
 
-## 👤 Author
+## Support
 
-**stenroj** - [GitHub Profile](https://github.com/stenroj)
-
-## 🤝 Contributing
-
-Contributions welcome! Please:
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📞 Support
-
-- 🐛 Issues: [GitHub Issues](https://github.com/stenroj/Trading-digit-flow-pro/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/stenroj/Trading-digit-flow-pro/discussions)
-- 🌐 Deriv Support: [https://www.deriv.com/contact](https://www.deriv.com/contact)
-
-## 🔗 Links
-
-- **Live Dashboard**: https://stenroj.github.io/Trading-digit-flow-pro/
-- **Repository**: https://github.com/stenroj/Trading-digit-flow-pro
-- **Deriv Platform**: https://app.deriv.com
-- **Deriv API Docs**: https://api.deriv.com
-
----
-
-**Built with ❤️ for Deriv Traders | v1.0.0**
+For issues or feature requests, open an issue on GitHub.
